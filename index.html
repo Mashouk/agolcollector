@@ -1,10 +1,97 @@
 <!DOCTYPE html>
  <html>
   <head>
-   <title>Data Collector for AGOL</title>
+
+    <meta charset="utf-8" /> 
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" /> 
+    <!-- viewport settings -->
+
+    <title>Data Collector for AGOL</title>
+
+    
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" /> 
+    <script src="https://js.arcgis.com/4.26/"></script>
+
+    <!-- MAKING MY MAP FULL SCREEN -->
+    <style>
+        html,
+        body,
+        #viewDiv {
+         padding: 0;
+         margin: 0;
+         height: 100%;
+         width: 100%;
+        }
+
+        .addRecordBtn {
+  position: absolute;
+  z-index: 10;
+  top: 10px;
+  right: 10px;
+  background-color: #0079c1;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.addRecordBtn:hover {
+  background-color: #005a87;
+}
+    </style>
+
+    <!-- ADDING MODULES -->
+    <script>
+        require([ "esri/config", "esri/Map", "esri/views/MapView","esri/widgets/Locate","esri/layers/FeatureLayer"
+ ], ( esriConfig, Map, MapView, Locate,FeatureLayer) => {
+         
+
+        esriConfig.apiKey = "AAPK9c576cbd3a844e7791c0d5901d6d1b876W9Kwr0mfce5WFBsw3WmfabQ1sD8IBrqASyYAbSi22UUfDN4txoxY5y-bIM1jVhR";
+
+
+         const map = new Map({
+            basemap: "satellite"
+        });
+
+        var view = new MapView({
+          container: "viewDiv",
+          map: map
+        });
+
+        const locateBtn = new Locate({
+          view: view
+        });
+
+        // Add the locate widget to the top left corner of the view
+        view.ui.add(locateBtn, {
+          position: "top-left"
+        });
+
+        // Create featurelayer from feature service 
+            const layer = new FeatureLayer({ 
+         // URL to the service 
+            url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/survey123_580d1fc48af6460bba8f6a39cfecf0b3_results/FeatureServer" //Your item URL Goes Here
+        });
+
+        map.add(layer);
+
+
+
+        
+    });
+
+    </script>
+
   </head>
   <body>
    <!-- hello world text to check if everything worked -->
-   <h1>Hello World! I am ready to collect data.</h1>
+   
+    <a href="https://survey123.arcgis.com/share/580d1fc48af6460bba8f6a39cfecf0b3"target="_blank" class="addRecordBtn">Add Record</a>
+
+    <div id="viewDiv"></div>
+
   </body>
 </html>
